@@ -1,0 +1,54 @@
+name: Build and Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs: 
+  build-and-release:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.22.3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+        
+      - name: Setup Gradle 8.1
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 7.5
+  
+      - name: Install dependencies
+        run: |
+          flutter pub get
+          pip install requests==2.32.3
+        shell: bash
+
+      - name: Build Project
+        run: python builder.py
+        shell: bash  
+
+      - name: Upload Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ./builder/*
+          token: ${{ secrets.GITHUB_TOKEN }}
