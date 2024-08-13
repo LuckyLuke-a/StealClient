@@ -17,22 +17,26 @@ class ConfigModelAdapter extends TypeAdapter<ConfigModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ConfigModel(
-      addr: fields[0] as String,
-      protocol: fields[1] as String,
-      secretKey: fields[2] as String,
-      intervalSecond: fields[3] as int,
-      skewSecond: fields[4] as int,
-      sni: fields[5] as String,
-      readDeadlineSecond: fields[6] as int,
-      writeDeadlineSecond: fields[7] as int,
+      addr: fields[0] as String?,
+      protocol: fields[1] as String?,
+      secretKey: fields[2] as String?,
+      intervalSecond: fields[3] as int?,
+      skewSecond: fields[4] as int?,
+      sni: fields[5] as String?,
+      readDeadlineSecond: fields[6] as int?,
+      writeDeadlineSecond: fields[7] as int?,
       userId: fields[8] as String?,
+      minSplitPacket: fields[9] as int?,
+      maxSplitPacket: fields[10] as int?,
+      subChunk: fields[11] as int?,
+      padding: fields[12] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, ConfigModel obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.addr)
       ..writeByte(1)
@@ -50,7 +54,15 @@ class ConfigModelAdapter extends TypeAdapter<ConfigModel> {
       ..writeByte(7)
       ..write(obj.writeDeadlineSecond)
       ..writeByte(8)
-      ..write(obj.userId);
+      ..write(obj.userId)
+      ..writeByte(9)
+      ..write(obj.minSplitPacket)
+      ..writeByte(10)
+      ..write(obj.maxSplitPacket)
+      ..writeByte(11)
+      ..write(obj.subChunk)
+      ..writeByte(12)
+      ..write(obj.padding);
   }
 
   @override

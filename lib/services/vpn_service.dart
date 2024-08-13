@@ -26,17 +26,22 @@ class ManageVPNService {
 
       baseConfig = BaseConfig.fromJson(json);
     }
-    baseConfig!.outbound[0].addr = config.addr;
-    baseConfig!.outbound[0].protocol = config.protocol;
+    baseConfig!.outbound[0].addr = config.addr ?? "";
+    baseConfig!.outbound[0].protocol = config.protocol ?? "";
     baseConfig!.outbound[0].protocol_settings.interval_second =
-        config.intervalSecond;
-    baseConfig!.outbound[0].protocol_settings.skew_second = config.skewSecond;
-    baseConfig!.outbound[0].protocol_settings.secret_key = config.secretKey;
-    baseConfig!.outbound[0].protocol_settings.sni = config.sni;
+        config.intervalSecond ?? 0;
+    baseConfig!.outbound[0].protocol_settings.skew_second = config.skewSecond ?? 0;
+    baseConfig!.outbound[0].protocol_settings.secret_key = config.secretKey ?? "";
+    baseConfig!.outbound[0].protocol_settings.sni = config.sni ?? "";
     baseConfig!.outbound[0].protocol_settings.read_deadline_second =
-        config.readDeadlineSecond;
+        config.readDeadlineSecond ?? 0;
     baseConfig!.outbound[0].protocol_settings.write_deadline_second =
-        config.writeDeadlineSecond;
+        config.writeDeadlineSecond ?? 0;
+    baseConfig!.outbound[0].protocol_settings.minSplitPacket = config.minSplitPacket ?? 0;
+    baseConfig!.outbound[0].protocol_settings.maxSplitPacket = config.maxSplitPacket ?? 0;
+    baseConfig!.outbound[0].protocol_settings.subChunk = config.subChunk ?? 0;
+    baseConfig!.outbound[0].protocol_settings.padding = config.padding ?? 0;
+
     baseConfig!.outbound[0].users = [
       User(id: config.userId!, system_id: config.userId!)
     ];

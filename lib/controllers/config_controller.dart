@@ -23,28 +23,22 @@ class ConfigController extends GetxController {
 }
 
 class NewConfig extends GetxController {
-  late final Rx<ConfigModel> model = ConfigModel(
-    addr: "",
-    protocol: "",
-    userId: "",
-    secretKey: "",
-    intervalSecond: 0,
-    skewSecond: 0,
-    sni: "",
-    readDeadlineSecond: 0,
-    writeDeadlineSecond: 0,
-  ).obs;
+  late final Rx<ConfigModel> model = ConfigModel().obs;
 
   void initlizeValues(ConfigModel getModel) {
-    setAddr(getModel.addr);
-    setType(getModel.protocol);
+    setAddr(getModel.addr ?? "");
+    setType(getModel.protocol ?? "");
     setUserId(getModel.userId ?? "");
-    setSecretKey(getModel.secretKey);
-    setIntervalSecond(getModel.intervalSecond.toString());
-    setSkewSecond(getModel.skewSecond.toString());
-    setSni(getModel.sni);
-    setReadDeadlineSecond(getModel.readDeadlineSecond.toString());
-    setWriteDeadlineSecond(getModel.writeDeadlineSecond.toString());
+    setSecretKey(getModel.secretKey ?? "");
+    setIntervalSecond((getModel.intervalSecond ?? 0).toString());
+    setSkewSecond((getModel.skewSecond ?? 0).toString());
+    setSni(getModel.sni ?? "");
+    setReadDeadlineSecond((getModel.readDeadlineSecond ?? 0).toString());
+    setWriteDeadlineSecond((getModel.writeDeadlineSecond ?? 0).toString());
+    setMinSplitPacket((getModel.minSplitPacket ?? 0).toString());
+    setMaxSplitPacket((getModel.maxSplitPacket ?? 0).toString());
+    setSubChunk((getModel.subChunk ?? 0).toString());
+    setPadding((getModel.padding ?? 0).toString());
   }
 
   void setAddr(String addr) {
@@ -100,4 +94,30 @@ class NewConfig extends GetxController {
       value?.writeDeadlineSecond = int.parse(writeDeadlineSecond);
     });
   }
+
+  void setMinSplitPacket(String minSplitPacket) {
+    model.update((value) {
+      value?.minSplitPacket = int.parse(minSplitPacket);
+    });
+  }
+
+  void setMaxSplitPacket(String maxSplitPacket) {
+    model.update((value) {
+      value?.maxSplitPacket = int.parse(maxSplitPacket);
+    });
+  }
+
+  void setSubChunk(String subChunk) {
+    model.update((value) {
+      value?.subChunk = int.parse(subChunk);
+    });
+  }
+
+  void setPadding(String padding) {
+    model.update((value) {
+      value?.padding = int.parse(padding);
+    });
+  }
+
+
 }

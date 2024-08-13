@@ -45,6 +45,10 @@ class ProtocolSettings {
   String sni;
   int read_deadline_second;
   int write_deadline_second;
+  int minSplitPacket;
+  int maxSplitPacket;
+  int subChunk;
+  int padding;
 
   ProtocolSettings({
     required this.secret_key,
@@ -53,6 +57,10 @@ class ProtocolSettings {
     required this.sni,
     required this.read_deadline_second,
     required this.write_deadline_second,
+    required this.minSplitPacket,
+    required this.maxSplitPacket,
+    required this.subChunk,
+    required this.padding,
   });
 
   factory ProtocolSettings.fromJson(Map<String, dynamic> json) {
@@ -63,6 +71,10 @@ class ProtocolSettings {
       sni: json['sni'],
       read_deadline_second: json['read_deadline_second'],
       write_deadline_second: json['write_deadline_second'],
+      minSplitPacket: json['min_split_packet'],
+      maxSplitPacket: json['max_split_packet'],
+      subChunk: json['sub_chunk'],
+      padding: json['padding'],
     );
   }
 
@@ -74,6 +86,10 @@ class ProtocolSettings {
       "sni": sni,
       "read_deadline_second": read_deadline_second,
       "write_deadline_second": write_deadline_second,
+      "min_split_packet": minSplitPacket,
+      "max_split_packet": maxSplitPacket,
+      "sub_chunk": subChunk,
+      "padding": padding,
     };
   }
 }
@@ -152,15 +168,15 @@ class BaseConfig {
 
   factory BaseConfig.fromJson(Map<String, dynamic> json) {
     return BaseConfig(
-      inbound:
-          (json['inbounds'] as List).map((i) => Inbound.fromJson(i)).toList(),
-      outbound:
-          (json['outbounds'] as List).map((i) => Outbound.fromJson(i)).toList(),
-      tun: Tun.fromJson(json['tun']),
-      logging: json['logging'],
-      debug_mode: json['debug_mode'],
-      restapi: json['restapi']
-    );
+        inbound:
+            (json['inbounds'] as List).map((i) => Inbound.fromJson(i)).toList(),
+        outbound: (json['outbounds'] as List)
+            .map((i) => Outbound.fromJson(i))
+            .toList(),
+        tun: Tun.fromJson(json['tun']),
+        logging: json['logging'],
+        debug_mode: json['debug_mode'],
+        restapi: json['restapi']);
   }
 
   Map<String, dynamic> toJson() {

@@ -130,7 +130,7 @@ fun startSteal(configData: String) {
 }
 
 suspend fun ping(): Int {
-    val proxyAddress = InetSocketAddress("127.0.0.1", 8091)
+    val proxyAddress = InetSocketAddress("127.0.0.1", 9091)
     val proxy = Proxy(Proxy.Type.HTTP, proxyAddress)
     val builder = OkHttpClient.Builder()
     builder.proxy(proxy)
